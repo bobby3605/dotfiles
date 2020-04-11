@@ -15,10 +15,10 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
-import XMonad.Hooks.EwmhDesktops (ewmh)
+import XMonad.Hooks.EwmhDesktops --(ewmh)
 
 import XMonad.Layout.Gaps
-import XMonad.Layout.Fullscreen
+--import XMonad.Layout.Fullscreen
 import XMonad.Layout.BinarySpacePartition as BSP
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Tabbed
@@ -34,14 +34,11 @@ import XMonad.Layout.WindowNavigation
 import XMonad.Layout.ZoomRow
 
 import XMonad.Util.Run(spawnPipe)
-import XMonad.Util.EZConfig(additionalKeys)
-import XMonad.Util.EZConfig(additionalKeysP)
+import XMonad.Util.EZConfig(additionalKeys, additionalKeysP)
 import XMonad.Util.Cursor
-
 import Graphics.X11.ExtraTypes.XF86
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
-
 
 ----------------------------mupdf--------------------------------------------
 -- Terminimport XMonad.Hooks.EwmhDesktopsal
@@ -51,7 +48,7 @@ import qualified Data.Map        as M
 
 myEmacs = "emacsclient -c -n -e '(switch-to-buffer nil)'"
 
-myTerminal = "xterm"
+myTerminal = "termite"
 
 -- The command to lock the screen or show the screensaver.
 myScreensaver = "dm-tool switch-to-greeter"
@@ -65,7 +62,7 @@ myScreenshot = "xfce4-screenshooter"
 
 -- The command to use as a launcher, to launch commands that don't have
 -- preset keybindings.
-myLauncher = "rofi -show"
+myLauncher = "rofi -show drun -theme onedark"
 
 
 ------------------------------------------------------------------------
@@ -105,7 +102,7 @@ myManageHook = composeAll
     , className =? "Xchat"                        --> doShift "5:media"
     , className =? "stalonetray"                  --> doIgnore
     , isFullscreen                                --> (doF W.focusDown <+> doFullFloat)
-    -- , isFullscreen                             --> doFullFloat
+   -- , isFullscreen                             --> doFullFloat
     ]
 
 
@@ -120,7 +117,7 @@ myManageHook = composeAll
 -- The available layouts.  Note that each layout is separated by |||,
 -- which denotes layout choice.
 
-outerGaps    = 10
+outerGaps    = 00
 myGaps       = gaps [(U, outerGaps), (R, outerGaps), (L, outerGaps), (D, outerGaps)]
 addSpace     = renamed [CutWordsLeft 2] . spacing gap
 tab          =  avoidStruts
@@ -134,7 +131,7 @@ layouts      = avoidStruts (
                     renamed [CutWordsLeft 1]
                   $ addTopBar
                   $ windowNavigation
-                  $ renamed [Replace "BSP"]
+                  $ renamed [Replace ""]
                   $ addTabs shrinkText myTabTheme
                   $ subLayout [] Simplest
                   $ myGaps
@@ -195,11 +192,11 @@ cyan    = "#2aa198"
 green   = "#859900"
 
 -- sizes
-gap         = 10
-topbar      = 10
+gap         = 0
+topbar      = 0
 border      = 0
-prompt      = 20
-status      = 20
+prompt      = 0
+status      = 0
 
 active      = blue
 activeWarn  = red
@@ -262,6 +259,9 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   [ ((modMask .|. shiftMask, xK_Return),
      spawn $ XMonad.terminal conf)
 
+  , ((0, xF86XK_MonBrightnessUp), spawn "lux -a 5%")
+  , ((0, xF86XK_MonBrightnessDown), spawn "lux -s 5%")
+
   , ((modMask, xK_bracketleft),
      spawn myEmacs)
   -- Lock the screen using command specified by myScreensaver.
@@ -292,9 +292,15 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
   , ((0, xF86XK_AudioLowerVolume),
      spawn "amixer -q set Master 5%-")
 
+  , ((shiftMask, xF86XK_AudioLowerVolume),
+     spawn "amixer -q set Master 1%-")
+
   -- Increase volume.
   , ((0, xF86XK_AudioRaiseVolume),
      spawn "amixer -q set Master 5%+")
+
+  , ((shiftMask, xF86XK_AudioRaiseVolume),
+     spawn "amixer -q set Master 1%+")
 
   -- Audio previous.
   , ((0, 0x1008FF16),
@@ -541,7 +547,7 @@ defaults = def {
 
     -- hooks, layouts
     layoutHook         = myLayout,
-    -- handleEventHook    = E.fullscreenEventHook,
+    --handleEventHook    = E.fullscreenEventHook,
     handleEventHook    = fullscreenEventHook,
     manageHook         = manageDocks <+> myManageHook,
     startupHook        = myStartupHook
