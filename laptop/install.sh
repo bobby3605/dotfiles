@@ -4,9 +4,9 @@
 #sudo pacman -Sy git emacs ripgrep tar fd-find clang xmonad xmonad-contrib xmobar stalonetray xcompmgr rofi
 
 #Emacs
-git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
-#~/.emacs.d/bin/doom install
-#cp -r .doom.d "$HOME/.doom.d/"
+git clone https://github.com/hlissner/doom-emacs ~/.emacs.d=
+~/.emacs.d/bin/doom install
+cp -r .doom.d "$HOME/.doom.d/"
 ~/.emacs.d/bin/doom sync
 
 # XMonad
