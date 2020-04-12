@@ -4,27 +4,28 @@
 sudo pacman -Sy zsh xorg-xset xloadimage lightdm-gtk-greeter git emacs ripgrep tar clang xmonad xmonad-contrib xmobar stalonetray xcompmgr rofi termite xorg-server compton
 
 #Emacs
-su bobby -c "git clone https://github.com/hlissner/doom-emacs ~/.emacs.d"
-su bobby -c "~/.emacs.d/bin/doom install"
-su bobby -c "cp -r .doom.d "~/.doom.d/""
-su bobby -c "~/.emacs.d/bin/doom sync"
+git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
+~/.emacs.d/bin/doom install
+cp -r .doom.d "~/.doom.d/"
+~/.emacs.d/bin/doom sync
 
 # XMonad
-su bobby -c "cp -r .xmonad "~/.xmonad""
+cp -r .xmonad "~/.xmonad"
 
 # ZSH STUFF
-su bobby -c "sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)""
-su bobby -c "cp .zsh_history "~/.zsh_history""
-su bobby -c "cp .zshrc "~/.zshrc""
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+cp .zsh_history "~/.zsh_history"
+cp .zshrc "~/.zshrc"
 
-su bobby -c "mkdir -p ~/.zsh"
-su bobby -c "git clone https://github.com/sindresorhus/pure.git .zsh/pure"
+mkdir -p ~/.zsh
+git clone https://github.com/sindresorhus/pure.git .zsh/pure
 
 #Random configs
-su bobby -c "cp onedark.rasi ~/onedark.rasi"
-cp lightdm.conf /etc/lightdm/lightdm.conf
-su bobby -c "mkdir -p ~/.config/termite/"
-su bobby -c "cp config ~/.config/termite/config"
-su bobby -c "cp .xsession ~/.xsession"
-gpasswd bobby autologin
-su bobby -c "cp *.xpm ~/Downloads/"
+cp onedark.rasi ~/onedark.rasi
+sudo cp lightdm.conf /etc/lightdm/lightdm.conf
+mkdir -p ~/.config/termite/
+cp config ~/.config/termite/config
+cp .xsession ~/.xsession
+sudo gpasswd bobby autologin
+mkdir ~/Downloads/
+cp *.xpm ~/Downloads/
