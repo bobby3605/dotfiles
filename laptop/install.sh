@@ -6,16 +6,16 @@ sudo pacman --noconfirm -Sy fd zsh xorg-xset xloadimage lightdm-gtk-greeter git 
 #Emacs
 git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
 ~/.emacs.d/bin/doom -y install
-cp -r .doom.d/* "~/.doom.d/"
+cp -r .doom.d/* ~/.doom.d/
 ~/.emacs.d/bin/doom -y sync
 
 # XMonad
-mkdir ~/.xmonad
-cp -r .xmonad/* "~/.xmonad"
+mkdir ~/.xmonad/
+cp -r .xmonad/* ~/.xmonad
 
 # ZSH STUFF
-cp .zsh_history "~/.zsh_history"
-cp .zshrc "~/.zshrc"
+cp .zsh_history ~/.zsh_history
+cp .zshrc ~/.zshrc
 
 mkdir ~/.zsh/
 git clone https://github.com/sindresorhus/pure.git ~/.zsh/pure
@@ -26,7 +26,7 @@ sudo cp lightdm.conf /etc/lightdm/lightdm.conf
 mkdir -p ~/.config/termite/
 cp config ~/.config/termite/config
 cp .xsession ~/.xsession
-sudo gpasswd bobby autologin
+sudo gpasswd -a bobby autologin
 mkdir ~/Downloads/
 cp *.xpm ~/Downloads/
 
