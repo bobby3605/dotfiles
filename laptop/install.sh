@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
 #Dependencies
-sudo pacman -Sy zsh xorg-xset xloadimage lightdm-gtk-greeter git emacs ripgrep tar clang xmonad xmonad-contrib xmobar stalonetray xcompmgr rofi termite xorg-server compton
+sudo pacman --noconfirm -Sy fd zsh xorg-xset xloadimage lightdm-gtk-greeter git emacs ripgrep tar clang xmonad xmonad-contrib xmobar stalonetray xcompmgr rofi termite xorg-server compton
 
 #Emacs
 git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
-~/.emacs.d/bin/doom install
+~/.emacs.d/bin/doom -y install
 cp -r .doom.d "~/.doom.d/"
-~/.emacs.d/bin/doom sync
+~/.emacs.d/bin/doom -y sync
 
 # XMonad
 cp -r .xmonad "~/.xmonad"
