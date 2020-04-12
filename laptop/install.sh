@@ -12,6 +12,7 @@ cp -r .doom.d/* ~/.doom.d/
 # XMonad
 mkdir ~/.xmonad/
 cp -r .xmonad/* ~/.xmonad
+xmonad --recompile
 
 # ZSH STUFF
 cp .zsh_history ~/.zsh_history
@@ -26,9 +27,13 @@ sudo cp lightdm.conf /etc/lightdm/lightdm.conf
 mkdir -p ~/.config/termite/
 cp config ~/.config/termite/config
 cp .xsession ~/.xsession
+sudo chmod +x ~/.xsession
 sudo gpasswd -a bobby autologin
 mkdir ~/Downloads/
 cp *.xpm ~/Downloads/
 
+
 #this quits the script so it needs to go at the end
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
+#add lightdm to system startup, add emacs-server to system startup
