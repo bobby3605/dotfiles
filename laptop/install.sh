@@ -6,19 +6,19 @@ sudo pacman --noconfirm -Sy fd zsh xorg-xset xloadimage lightdm-gtk-greeter git 
 #Emacs
 git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
 ~/.emacs.d/bin/doom -y install
-cp -r .doom.d "~/.doom.d/"
+cp -r .doom.d/* "~/.doom.d/"
 ~/.emacs.d/bin/doom -y sync
 
 # XMonad
-cp -r .xmonad "~/.xmonad"
+mkdir ~/.xmonad
+cp -r .xmonad/* "~/.xmonad"
 
 # ZSH STUFF
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 cp .zsh_history "~/.zsh_history"
 cp .zshrc "~/.zshrc"
 
-mkdir -p ~/.zsh
-git clone https://github.com/sindresorhus/pure.git .zsh/pure
+mkdir ~/.zsh/
+git clone https://github.com/sindresorhus/pure.git ~/.zsh/pure
 
 #Random configs
 cp onedark.rasi ~/onedark.rasi
@@ -29,3 +29,6 @@ cp .xsession ~/.xsession
 sudo gpasswd bobby autologin
 mkdir ~/Downloads/
 cp *.xpm ~/Downloads/
+
+#this quits the script so it needs to go at the end
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
