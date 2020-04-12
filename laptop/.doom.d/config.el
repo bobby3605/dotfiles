@@ -20,7 +20,7 @@
 ;; font string. You generally only need these two:
 ;; test
 (setq doom-font (font-spec :family "monospace" :size 14)
-      doom-variable-pitch-font (font-spec :family "sans"))
+      doom-variable-pitch-font (font-spec :family "Fira Code"))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -86,6 +86,8 @@
       (:prefix-map ("o" . "open")
         :desc "Toggle neotree" "n" #'neotree-toggle)
       )
+(map! :leader "f w" #'swiper-isearch)
+
 (require 'sly)
 (define-key sly-mode-map (kbd "C-c r") (lambda () (interactive) (save-buffer) (sly-compile-and-load-file) (ace-select-window) ))
 (sp-local-pair 'sly-mrepl-mode "'" nil)
@@ -141,6 +143,8 @@
                                       (haskell-process-load-file)
                                       (haskell-interactive-switch)
                                       ))
+
+
 
 ;(load (expand-file-name "/home/bobby/quicklisp/setup.el"))
 

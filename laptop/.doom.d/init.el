@@ -177,3 +177,6 @@
        ;;literate
        (default +bindings +smartparens)
        )
+
+(set-frame-parameter (selected-frame) 'alpha '(90))
+(add-to-list 'default-frame-alist '(alpha . (90)))

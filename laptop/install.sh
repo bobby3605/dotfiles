@@ -6,11 +6,11 @@ sudo pacman -Sy zsh xorg-xset xloadimage lightdm-gtk-greeter git emacs ripgrep t
 #Emacs
 su bobby -c "git clone https://github.com/hlissner/doom-emacs ~/.emacs.d"
 su bobby -c "~/.emacs.d/bin/doom install"
-su bobby -c "cp -r .doom.d "$HOME/.doom.d/""
+su bobby -c "cp -r .doom.d "~/.doom.d/""
 su bobby -c "~/.emacs.d/bin/doom sync"
 
 # XMonad
-su bobby -c "cp -r .xmonad "$HOME/.xmonad""
+su bobby -c "cp -r .xmonad "~/.xmonad""
 
 # ZSH STUFF
 su bobby -c "sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)""
@@ -27,3 +27,4 @@ su bobby -c "mkdir -p ~/.config/termite/"
 su bobby -c "cp config ~/.config/termite/config"
 su bobby -c "cp .xsession ~/.xsession"
 gpasswd bobby autologin
+su bobby -c "cp *.xpm ~/Downloads/"

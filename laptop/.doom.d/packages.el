@@ -62,5 +62,5 @@
 (package! dap-mode)
 (package! ccls)
 (package! lsp-treemacs)
-
+(package! frames-only-mode)
 ;(package! flycheck-haskell)
