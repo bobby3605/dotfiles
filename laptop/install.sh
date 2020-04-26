@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 #Dependencies
-sudo pacman --noconfirm -Sy fd zsh xorg-xset xloadimage lightdm-gtk-greeter git emacs ripgrep tar clang xmonad xmonad-contrib xmobar stalonetray xcompmgr rofi termite xorg-server compton
+sudo pacman --noconfirm -Sy sbcl stack nitrogen fd zsh xorg-xset xloadimage lightdm-gtk-greeter git emacs ripgrep tar clang xmonad xmonad-contrib xmobar stalonetray xcompmgr rofi termite xorg-server compton
 
 #Emacs
 git clone https://github.com/hlissner/doom-emacs ~/.emacs.d
@@ -13,10 +13,6 @@ cp -r .doom.d/* ~/.doom.d/
 mkdir ~/.xmonad/
 cp -r .xmonad/* ~/.xmonad
 xmonad --recompile
-
-# ZSH STUFF
-cp .zsh_history ~/.zsh_history
-cp .zshrc ~/.zshrc
 
 mkdir ~/.zsh/
 git clone https://github.com/sindresorhus/pure.git ~/.zsh/pure
@@ -32,8 +28,13 @@ sudo gpasswd -a bobby autologin
 mkdir ~/Downloads/
 cp *.xpm ~/Downloads/
 
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
-#this quits the script so it needs to go at the end
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+# ZSH STUFF
+cp .zsh_history ~/.zsh_history
+cp .zshrc ~/.zshrc
 
 #add lightdm to system startup, add emacs-server to system startup
+sudo systemctl enable lightdm
+sudo systemctl enable emacs
+#use nitrogen to set wallpaper
