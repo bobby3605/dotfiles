@@ -303,16 +303,16 @@ myKeys conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
      spawn "amixer -q set Master 1%+")
 
   -- Audio previous.
-  , ((0, 0x1008FF16),
-     spawn "")
+  , ((0, xF86XK_AudioPrev),
+     spawn "playerctl --all-players previous")
 
   -- Play/pause.
-  , ((0, 0x1008FF14),
-     spawn "")
+  , ((0, xF86XK_AudioPlay),
+     spawn "playerctl --all-players play-pause")
 
   -- Audio next.
-  , ((0, 0x1008FF17),
-     spawn "")
+  , ((0, xF86XK_AudioNext),
+     spawn "playerctl --all-players next")
 
   -- Eject CD tray.
   , ((0, 0x1008FF2C),

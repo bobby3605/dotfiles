@@ -36,5 +36,7 @@ cp .zshrc ~/.zshrc
 
 #add lightdm to system startup, add emacs-server to system startup
 sudo systemctl enable lightdm
-sudo systemctl enable emacs
+systemctl --user enable emacs
+
+usermod --shell /usr/bin/zsh bobby
 #use nitrogen to set wallpaper
