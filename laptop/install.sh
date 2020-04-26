@@ -38,5 +38,5 @@ cp .zshrc ~/.zshrc
 sudo systemctl enable lightdm
 systemctl --user enable emacs
 
-usermod --shell /usr/bin/zsh bobby
+usermod --shell /usr/bin/zsh "$(id -u -n)"
 #use nitrogen to set wallpaper
