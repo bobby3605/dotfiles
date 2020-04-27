@@ -21,7 +21,7 @@ git clone https://github.com/sindresorhus/pure.git ~/.zsh/pure
 cp onedark.rasi ~/onedark.rasi
 sudo cp lightdm.conf /etc/lightdm/lightdm.conf
 #Add to autologin
-sed -i '120s/.*/autologin-user='$user1'/' /etc/lightdm/lightdm.conf
+sudo sed -i '120s/.*/autologin-user='$user1'/' /etc/lightdm/lightdm.conf
 mkdir -p ~/.config/termite/
 cp config ~/.config/termite/config
 cp .xsession ~/.xsession
@@ -42,8 +42,8 @@ systemctl --user enable emacs
 sudo usermod --shell /usr/bin/zsh $user1
 #use nitrogen to set wallpaper
 cp night.jpg ~/Downloads/night.jpg
-
+mkdir -p ~/.config/nitrogen
 cp bg-saved.cfg ~/.config/nitrogen/bg-saved.cfg
 echo "Enter location of background image"
 read bg
-sed -i '2s/.*/file='$bg'/'
+sed -i '2s/.*/file='$bg'/' ~/.config/nitrogen/bg-saved.cfg
