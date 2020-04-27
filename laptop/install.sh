@@ -44,6 +44,6 @@ sudo usermod --shell /usr/bin/zsh $user1
 cp night.jpg ~/Downloads/night.jpg
 mkdir -p ~/.config/nitrogen
 cp bg-saved.cfg ~/.config/nitrogen/bg-saved.cfg
-echo "Enter location of background image"
-read bg
-sed -i '2s/.*/file='$bg'/' ~/.config/nitrogen/bg-saved.cfg
+#echo "Enter location of background image, use \/ instead of /"
+#read bg
+#sed -i '2s/.*/file='$bg'/' ~/.config/nitrogen/bg-saved.cfg
