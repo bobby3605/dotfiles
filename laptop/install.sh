@@ -38,8 +38,7 @@ cp .zshrc ~/.zshrc
 
 #add lightdm to system startup, add emacs-server to system startup
 sudo systemctl enable lightdm
-sudo /etc/init.d/dbus &
-su $user1 systemctl --user enable emacs
+sudo systemctl --global enable emacs
 sudo usermod --shell /usr/bin/zsh $user1
 #use nitrogen to set wallpaper
 cp night.jpg ~/Downloads/night.jpg
