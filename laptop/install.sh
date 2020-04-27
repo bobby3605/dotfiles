@@ -26,7 +26,7 @@ mkdir -p ~/.config/termite/
 cp config ~/.config/termite/config
 cp .xsession ~/.xsession
 sudo chmod +x ~/.xsession
-sudo gpasswd -a bobby autologin
+sudo gpasswd -a $user1 autologin
 mkdir ~/Downloads/
 cp *.xpm ~/Downloads/
 
@@ -38,7 +38,8 @@ cp .zshrc ~/.zshrc
 
 #add lightdm to system startup, add emacs-server to system startup
 sudo systemctl enable lightdm
-systemctl --user enable emacs
+sudo /etc/init.d/dbus &
+su $user1 systemctl --user enable emacs
 sudo usermod --shell /usr/bin/zsh $user1
 #use nitrogen to set wallpaper
 cp night.jpg ~/Downloads/night.jpg
