@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-
+user1="$(id -u -n)"
 #Dependencies
 sudo pacman --noconfirm -Sy sbcl stack nitrogen fd zsh xorg-xset xloadimage lightdm-gtk-greeter git emacs ripgrep tar clang xmonad xmonad-contrib xmobar stalonetray xcompmgr rofi termite xorg-server compton
 
@@ -20,6 +20,8 @@ git clone https://github.com/sindresorhus/pure.git ~/.zsh/pure
 #Random configs
 cp onedark.rasi ~/onedark.rasi
 sudo cp lightdm.conf /etc/lightdm/lightdm.conf
+#Add to autologin
+sed -i '120s/.*/autologin-user='$user1'/' /etc/lightdm/lightdm.conf
 mkdir -p ~/.config/termite/
 cp config ~/.config/termite/config
 cp .xsession ~/.xsession
@@ -37,8 +39,11 @@ cp .zshrc ~/.zshrc
 #add lightdm to system startup, add emacs-server to system startup
 sudo systemctl enable lightdm
 systemctl --user enable emacs
-ids="$(id -u -n)"
-sudo usermod --shell /usr/bin/zsh $ids
+sudo usermod --shell /usr/bin/zsh $user1
 #use nitrogen to set wallpaper
 cp night.jpg ~/Downloads/night.jpg
-nitrogen ~/Downloads
+
+cp bg-saved.cfg ~/.config/nitrogen/bg-saved.cfg
+echo "Enter location of background image"
+read bg
+sed -i '2s/.*/file='$bg'/'
