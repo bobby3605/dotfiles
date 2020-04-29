@@ -58,3 +58,7 @@ if [ -z "$(pgrep insync)" ] ; then
 fi
 # xbindkeys
 xbindkeys
+
+ckb-next &
+sleep 1
+wmctrl -c "ckb-next"

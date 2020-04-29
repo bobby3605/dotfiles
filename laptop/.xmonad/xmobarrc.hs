@@ -27,35 +27,12 @@ Config {
                                      ,"-l","#bbc2cf"
                                      ,"-n","#bbc2cf"] 50
 
-                    , Run CoreTemp ["-t", "<icon=/home/bobby/Downloads/weather.xpm/> <core0>°"
-                                   , "-L", "30"
-                                   , "-H", "75"
-                                   , "-l", "lightblue"
-                                   , "-n", "#bbc2cf"
-                                   , "-h", "#aa4450"] 50
-
-                    -- battery monitor
-                    , Run BatteryP       [ "BAT0" ]
-                                         [ "--template" , "<fc=#B1DE76><fn=1></fn></fc> <acstatus>"
-                                         , "--Low"      , "10"        -- units: %
-                                         , "--High"     , "80"        -- units: %
-                                         , "--low"      , "#fb4934" -- #ff5555
-                                         , "--normal"   , "#bbc2cf"
-                                         , "--high"     , "#98be65"
-
-                                         , "--" -- battery specific options
-                                                   -- discharging status
-                                                   , "-o"   , "<left>%"
-                                                   -- AC "on" status
-                                                   , "-O"   , "<left>% (<fc=#98be65>Charging</fc>)" -- 50fa7b
-                                                   -- charged status
-                                                   , "-i"   , "<fc=#98be65>Charged</fc>"
-                                         ] 50
+                    , Run Com "/home/bobby/scripts/temp" [] "temp" 50
                     , Run StdinReader
                     --, Run PipeReader "/home/bobby/.vol" "vol"
-                    , Run Volume "default" "Master" [] 10
+                    , Run Alsa "default" "Master" []
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% }{%default:Master% | %cpu% | %coretemp% | %memory% | %battery% | %dynnetwork% | %date% "   -- #69DFFA
+       , template = "%StdinReader% }{%alsa:default:Master% | %cpu% | <icon=/home/bobby/Downloads/weather.xpm/> %temp% | %memory% | %dynnetwork% | %date% "   -- #69DFFA
        }
