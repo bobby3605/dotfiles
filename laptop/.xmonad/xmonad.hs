@@ -22,7 +22,7 @@ import Data.Monoid
 import qualified Data.Map as M
 import qualified XMonad.StackSet as W
 
-import Colors
+import qualified Constants as C
 
 myEmacs :: String
 myEmacs = "emacsclient -c -n -e '(switch-to-buffer nil)'"
@@ -36,8 +36,8 @@ myScreenshot = "xfce4-screenshooter"
 myLauncher :: String
 myLauncher = "rofi -show drun -theme onedark"
 
-myWorkspaces :: [String]
-myWorkspaces = withScreens 2["1: term","2: web","3: code","4: media"] ++ map show ([5..9] :: [Integer])
+myWorkspaces :: [PhysicalWorkspace]
+myWorkspaces = ["1: term","2: web","3: code","4: media"] ++ map show ([5..9] :: [Integer])
 
 myModMask :: KeyMask
 myModMask = mod4Mask
@@ -58,22 +58,7 @@ myStartupHook = do
   spawn     "bash ~/.xmonad/startup.sh"
   setDefaultCursor xC_left_ptr
 
-myTabConfig :: Theme
-myTabConfig = def
-  {
-      fontName              = "xft:Fira Code:size=15:antialias=true"
-    , inactiveBorderColor   = base03
-    , inactiveColor         = base03
-    , inactiveTextColor     = base03
-    , activeBorderColor     = active
-    , activeColor           = active
-    , activeTextColor       = active
-    , urgentBorderColor     = red
-    , urgentTextColor       = yellow
-    , decoHeight            = 0
-  }
-
-layouts = emptyBSP ||| tabbed shrinkText myTabConfig
+layouts = TwoPane 3/100 1/2 ||| emptyBSP ||| noBorders (tabbed shrinkText C.myTabConfig)
 
 myLayoutHook = smartBorders . avoidStruts $ layouts
 
@@ -81,6 +66,7 @@ myLogHook :: X()
 myLogHook =
   multiPP activePP inactivePP
 
+myManageHook :: Query (Endo WindowSet)
 myManageHook = composeAll
   [
     isFullscreen --> doFullFloat
@@ -92,6 +78,7 @@ myEventHook = composeAll
  dynStatusBarEventHook barCreator barDestroyer,
  fullscreenEventHook
  ]
+
 defaults = def
   {
     borderWidth        = myBorderWidth,
@@ -103,34 +90,46 @@ defaults = def
     logHook            = myLogHook >> updatePointer (0.75, 0.75) (0.75, 0.75),
     layoutHook         = myLayoutHook,
     manageHook         = manageDocks <+> myManageHook
-  }
+ }
 
 main :: IO()
 main = do
+  screens <- countScreens
   xmonad $ docks
          $ navigation2DP def
           ("<Up>", "<Left>", "<Down>", "<Right>")
           [("M-",   windowGo),
           ("M-S-", windowSwap)] False
          $ ewmh
-         $ defaults `additionalKeys` otherKeys
+         $ defaults
+         {
+           workspaces = withScreens screens (workspaces defaults)
+         }
+         `additionalKeys` otherKeys (workspaces defaults)
 
 activePP :: PP
 activePP = inactivePP
   {
-    ppLayout = (\_ -> ""),
     ppVisible = (\_ -> "")
   }
 
 inactivePP :: PP
 inactivePP = def {
-  ppCurrent = (\x -> xmobarColor xmobarCurrentWorkspaceColor "" $ wrap "[" "]" $ drop 2 x)
-  ,ppTitle = xmobarColor xmobarTitleColor "" . shorten 50
+  ppCurrent = (\x -> xmobarColor C.xmobarCurrentWorkspaceColor "" $ wrap "[" "]" $ drop 2 x)
+  ,ppTitle = xmobarColor C.xmobarTitleColor "" . shorten 50
   ,ppSep = "  "
-  ,ppLayout = (\_ -> "")
+  ,ppLayout = (\x -> xmobarColor C.xmobarTitleColor "" $ layoutCase x)
   ,ppVisible = (\_ -> "")
+  -- If screenID == screen of hidden workspace
+  -- Comment out next line if using one monitor
   ,ppHidden = (\_ -> "")
   }
+
+layoutCase :: String -> String
+layoutCase x = case x of
+  "BSP" -> ""
+  "Tabbed Simplest" -> "Tabbed"
+  _ -> x
 
 barCreator :: DynamicStatusBar
 barCreator (S sid) = spawnPipe $ "xmobar -x " ++ show sid ++ " ~/.xmonad/xmobarrc.hs"
@@ -151,15 +150,18 @@ myKeys = \c -> mkKeymap c[
  ("<XF86AudioPrev>", spawn "playerctl --all-players previous"),
  ("<XF86AudioNext>", spawn "playerctl --all-players next"),
  ("M-q", restart "xmonad" True),
- ("M-<Space>", sendMessage NextLayout)
+ ("M-<Space>", sendMessage NextLayout),
+ ("M-S-C-p", spawn myScreenshot),
+ ("M-l", XMonad.windows W.focusDown),
+ ("M-h", XMonad.windows W.focusUp)
  ]
 
-otherKeys :: [((KeyMask, KeySym), X())]
-otherKeys =
+otherKeys :: [PhysicalWorkspace] -> [((KeyMask, KeySym), X())]
+otherKeys workspaceConfig =
   -- mod-[1..9], Switch to workspace N
   -- mod-shift-[1..9], Move client to N workspace
   [((m .|. myModMask, k), windows $ onCurrentScreen f i)
-      | (i, k) <- zip (workspaces' defaults) [xK_1 .. xK_9]
+      | (i, k) <- zip workspaceConfig [xK_1 .. xK_9]
       , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
    ++
 
