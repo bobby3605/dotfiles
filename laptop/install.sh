@@ -29,6 +29,8 @@ sudo chmod +x ~/.xsession
 sudo gpasswd -a $user1 autologin
 mkdir ~/Downloads/
 cp *.xpm ~/Downloads/
+mkdir ~/.config/alacritty/
+cp alacritty.yml ~/.config/alacritty/alacritty.yml
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
 
